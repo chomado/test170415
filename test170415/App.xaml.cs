@@ -2,6 +2,10 @@
 
 using Xamarin.Forms;
 
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
+
 namespace test170415
 {
     public partial class App : Application
@@ -22,6 +26,17 @@ namespace test170415
 
             SetMainPage();
         }
+
+        protected override void OnStart()
+         {
+             base.OnStart();
+ 
+             // Mobile Center
+             MobileCenter.Start(
+                appSecret: $"ios={Const.Keys.MobileCenterSecretIos};" + $"android={Const.Keys.MobileCenterSecretAndroid};",
+                 services: new[] { typeof(Analytics), typeof(Crashes) }
+             );
+         }
 
         public static void SetMainPage()
         {
